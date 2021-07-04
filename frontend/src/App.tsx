@@ -1,25 +1,37 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
+import { HomePage } from './pages/HomePage/HomePage';
+import { SigninPage } from './pages/SigninPage/SigninPage';
+import { UserPage } from './pages/UserPage/UserPage';
+
+import { fontFamily, fontSize, gray2 } from './graphics/Styles';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BrowserRouter>
+        <div
+          css={css`
+            font-family: ${fontFamily};
+            font-size: ${fontSize};
+            color: ${gray2};
+          `}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Header />
+
+          <Routes>
+            <Route path="" element={<HomePage />} />
+            <Route path="signin" element={<SigninPage />} />
+            <Route path="search" element={<UserPage />} />
+          </Routes>
+
+          <Footer/>
+        </div>
+      </BrowserRouter>
   );
 }
 
