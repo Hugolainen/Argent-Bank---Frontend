@@ -1,37 +1,33 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
-import { HomePage } from './pages/HomePage/HomePage';
-import { SigninPage } from './pages/SigninPage/SigninPage';
-import { UserPage } from './pages/UserPage/UserPage';
-
-import { fontFamily, fontSize, gray2 } from './graphics/Styles';
+import { HomePage } from './pages/HomePage/Home';
+import { SigninPage } from './pages/SigninPage/Signin';
+import { UserPage } from './pages/UserPage/User';
 
 function App() {
   return (
     <BrowserRouter>
-        <div
-          css={css`
-            font-family: ${fontFamily};
-            font-size: ${fontSize};
-            color: ${gray2};
-          `}
-        >
-          <Header />
+      <div>
+        <Header />
 
-          <Routes>
-            <Route path="" element={<HomePage />} />
-            <Route path="signin" element={<SigninPage />} />
-            <Route path="search" element={<UserPage />} />
-          </Routes>
+        <Switch>
+          <Route path="/">
+            <HomePage />
+          </Route>
+          <Route path="/signin">
+            <SigninPage />
+          </Route>
+          <Route path="/user/{id}">
+            <UserPage />
+          </Route>
+        </Switch>
 
-          <Footer/>
-        </div>
-      </BrowserRouter>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 
