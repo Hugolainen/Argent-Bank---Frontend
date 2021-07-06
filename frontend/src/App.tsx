@@ -10,23 +10,21 @@ import { UserPage } from './pages/UserPage/User';
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <Header />
+      <Header />
 
-        <Switch>
-          <Route path="/">
-            <HomePage />
-          </Route>
-          <Route path="/signin">
-            <SigninPage />
-          </Route>
-          <Route path="/user/{id}">
-            <UserPage />
-          </Route>
-        </Switch>
+      <Switch>
+        <Route path="/signin">
+          <SigninPage />
+        </Route>
+        <Route path="/user">
+          <UserPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
 
-        <Footer />
-      </div>
+      <Footer />
     </BrowserRouter>
   );
 }
