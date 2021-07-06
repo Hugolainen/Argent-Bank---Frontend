@@ -10,7 +10,7 @@ import { UserPage } from './pages/UserPage/User';
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <Header loggedInUser={false} userFirstName={'Tony'} />
 
       <Switch>
         <Route path="/signin">
