@@ -49,18 +49,23 @@ body {
   padding: 5px 20px;
 }
 
-.main-nav a {
+.main-nav {
   font-weight: bold;
   color: #2c3e50;
 }
 
-.main-nav a.router-link-exact-active {
+.main-nav Link.router-link-exact-active {
   color: #42b983;
 }
 
 .main-nav-item {
   text-decoration: none;
   margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.main-nav-item i{
+  margin-right: 0.2rem;
 }
 
 .main-nav-item:hover {
@@ -300,4 +305,28 @@ body {
 .errorMessage{
   color: red;
   font-size: 12px;
+}
+
+.profileEditor{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-bottom: 2rem;
+}
+
+.profileEditor input {
+  padding: 5px;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  max-width: 200px;
+}
+
+.profileEditor button {
+  width:100px;
+}
+
+.profileEditor div {
+  display: flex;
+  justify-content: center;
+  gap:1rem;
 }

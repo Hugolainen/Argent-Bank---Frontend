@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="body">
-          <Header userFirstName={'Tony'} />
+          <Header />
 
           <Switch>
             <Route path="/signin">

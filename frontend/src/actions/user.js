@@ -5,7 +5,6 @@ import UserDataService from '../services/user.service';
 export const retrieveProfile = () => async (dispatch) => {
   try {
     const res = await UserDataService.fetchProfile();
-    console.log(res);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -17,7 +16,7 @@ export const retrieveProfile = () => async (dispatch) => {
 
 export const updateProfile = (firstName, lastName) => async (dispatch) => {
   try {
-    const res = await UserDataService.updateProfile({ firstName, lastName });
+    const res = await UserDataService.updateProfile({ firstName: firstName, lastName: lastName });
 
     dispatch({
       type: UPDATE_PROFILE,

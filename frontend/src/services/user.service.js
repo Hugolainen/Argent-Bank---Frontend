@@ -3,10 +3,7 @@ import authHeader from './auth-header';
 
 class UserDataService {
   fetchProfile() {
-    const headers = {
-      Authorization: authHeader(),
-    };
-    return http.post('/user/profile', { headers: headers });
+    return http.post('/user/profile', {}, { headers: authHeader() });
   }
 
   updateProfile(data) {
