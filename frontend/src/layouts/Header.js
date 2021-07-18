@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import '../../assets/style.css';
-import argentBankLogo from '../../assets/img/argentBankLogo.png';
+import '../assets/style.css';
+import argentBankLogo from '../assets/img/argentBankLogo.png';
 
 class Header extends Component {
   render() {
@@ -39,4 +40,15 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  loggedInUser: PropTypes.bool,
+  userFirstName: PropTypes.string,
+};
+
+Header.defaultProps = {
+  loggedInUser: false,
+  userFirstName: 'err',
+};
+
 export default Header;

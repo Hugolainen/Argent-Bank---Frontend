@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import HomePage from './pages/HomePage/Home';
-import SigninPage from './pages/SigninPage/Signin';
-import UserPage from './pages/UserPage/User';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import HomePage from './pages/Home';
+import SigninPage from './pages/Signin';
+import UserPage from './pages/User';
 
 class App extends Component {
   render() {
