@@ -34,8 +34,8 @@ export const signupNewUser = (email, password, firstName, lastName) => (dispatch
   );
 };
 
-export const loginUser = (email, password) => (dispatch) => {
-  return AuthService.login(email, password).then(
+export const signinUser = (email, password) => (dispatch) => {
+  return AuthService.login({ email: email, password: password }).then(
     (data) => {
       dispatch({
         type: LOGIN_SUCCESS,
@@ -62,7 +62,7 @@ export const loginUser = (email, password) => (dispatch) => {
   );
 };
 
-export const logoutUser = () => (dispatch) => {
+export const signoutUser = () => (dispatch) => {
   AuthService.logout();
 
   dispatch({

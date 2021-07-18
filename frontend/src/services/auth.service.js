@@ -3,15 +3,15 @@ import http from '../http-common';
 class AuthService {
   login(data) {
     return http.post('/user/login', data).then((response) => {
-      if (response.data.accessToken) {
-        localStorage.setItem('user', JSON.stringify(response.data));
+      if (response.data.body.token) {
+        localStorage.setItem('token', JSON.stringify(response.data.body.token));
       }
       return response.data;
     });
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
   }
 
   signup(data) {

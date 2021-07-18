@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { signoutUser } from '../actions/auth';
 
 import argentBankLogo from '../assets/img/argentBankLogo.png';
 
-class Header extends Component {
+export class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSignout = this.handleSignout.bind(this);
+  }
+
+  handleSignout() {
+    this.props.signoutUser();
+  }
+
   render() {
-    const loggedInUser = this.props.loggedInUser;
+    console.log(this.props.isLoggedIn);
+    const loggedInUser = this.props.isLoggedIn;
     const userFirstName = this.props.userFirstName;
 
     return (
@@ -25,14 +37,14 @@ class Header extends Component {
         )}
         {loggedInUser && (
           <div>
-            <a className="main-nav-item" href="./user.html">
+            <Link className="main-nav-item" to="/profile">
               <i className="fa fa-user-circle"></i>
               {userFirstName}
-            </a>
-            <a className="main-nav-item" href="./index.html">
+            </Link>
+            <span className="main-nav-item" onClick={() => this.handleSignout()}>
               <i className="fa fa-sign-out"></i>
               Sign Out
-            </a>
+            </span>
           </div>
         )}
       </nav>
@@ -40,14 +52,13 @@ class Header extends Component {
   }
 }
 
-Header.propTypes = {
-  loggedInUser: PropTypes.bool,
-  userFirstName: PropTypes.string,
-};
+function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
+  const { message } = state.message;
+  return {
+    isLoggedIn,
+    message,
+  };
+}
 
-Header.defaultProps = {
-  loggedInUser: false,
-  userFirstName: 'err',
-};
-
-export default Header;
+export default connect(mapStateToProps, { signoutUser })(Header);

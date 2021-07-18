@@ -6,21 +6,21 @@ import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import HomePage from './pages/Home';
 import SigninPage from './pages/Signin';
-import UserPage from './pages/User';
+import ProfilePage from './pages/Profile';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <body>
-          <Header loggedInUser={false} userFirstName={'Tony'} />
+        <div className="body">
+          <Header userFirstName={'Tony'} />
 
           <Switch>
             <Route path="/signin">
               <SigninPage />
             </Route>
-            <Route path="/user">
-              <UserPage />
+            <Route path="/profile">
+              <ProfilePage />
             </Route>
             <Route path="/">
               <HomePage />
@@ -28,7 +28,7 @@ class App extends Component {
           </Switch>
 
           <Footer />
-        </body>
+        </div>
       </BrowserRouter>
     );
   }

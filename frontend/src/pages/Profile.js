@@ -1,8 +1,37 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Account from '../components/Account';
 
-class UserPage extends Component {
+import { connect } from 'react-redux';
+import { retrieveProfile, updateProfile } from '../actions/user';
+
+export class ProfilePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      loading: false,
+    };
+  }
+
+  async retrieveUserProfile() {
+    this.setState({
+      loading: true,
+    });
+
+    await this.props.retrieveProfile();
+  }
+
+  async componentDidMount() {
+    await this.retrieveUserProfile();
+    //console.log(this.state);
+    // console.log(this.props);
+  }
+
   render() {
+    if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
+
     return (
       <main className="main bg-dark">
         <div className="header">
@@ -36,4 +65,14 @@ class UserPage extends Component {
     );
   }
 }
-export default UserPage;
+
+function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
+  const userProfile = state.userProfile;
+  return {
+    isLoggedIn,
+    userProfile,
+  };
+}
+
+export default connect(mapStateToProps, { retrieveProfile, updateProfile })(ProfilePage);

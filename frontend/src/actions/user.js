@@ -5,7 +5,7 @@ import UserDataService from '../services/user.service';
 export const retrieveProfile = () => async (dispatch) => {
   try {
     const res = await UserDataService.fetchProfile();
-
+    console.log(res);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
