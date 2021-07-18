@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import './assets/style.css';
 
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
@@ -11,21 +12,23 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Header loggedInUser={false} userFirstName={'Tony'} />
+        <body>
+          <Header loggedInUser={false} userFirstName={'Tony'} />
 
-        <Switch>
-          <Route path="/signin">
-            <SigninPage />
-          </Route>
-          <Route path="/user">
-            <UserPage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
+          <Switch>
+            <Route path="/signin">
+              <SigninPage />
+            </Route>
+            <Route path="/user">
+              <UserPage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
 
-        <Footer />
+          <Footer />
+        </body>
       </BrowserRouter>
     );
   }

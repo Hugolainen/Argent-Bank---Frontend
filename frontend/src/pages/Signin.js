@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import '../assets/style.css';
-
 class SigninPage extends Component {
   handleSignin(event) {
     console.log(event);

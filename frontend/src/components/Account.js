@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../assets/style.css';
 
 class Account extends Component {
   formatToCurrency = (amount) => {

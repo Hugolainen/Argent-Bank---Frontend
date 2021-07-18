@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import '../assets/style.css';
 import argentBankLogo from '../assets/img/argentBankLogo.png';
 
 class Header extends Component {

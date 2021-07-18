@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Account from '../components/Account';
-import '../assets/style.css';
 
 class UserPage extends Component {
   render() {
