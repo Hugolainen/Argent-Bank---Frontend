@@ -1,6 +1,8 @@
-import { GET_PROFILE, UPDATE_PROFILE } from '../actions/types';
+import { GET_PROFILE, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE } from '../actions/types';
 
-const initialState = [];
+const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+
+const initialState = userProfile ? userProfile : { userProfile: null };
 
 function userProfileReducer(userProfile = initialState, action) {
   const { type, payload } = action;
@@ -9,15 +11,14 @@ function userProfileReducer(userProfile = initialState, action) {
     case GET_PROFILE:
       return payload;
 
-    case UPDATE_PROFILE:
-      if (userProfile === payload) {
-        return {
-          ...userProfile,
-          ...payload,
-        };
-      } else {
-        return userProfile;
-      }
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...userProfile,
+        ...payload,
+      };
+
+    case UPDATE_PROFILE_FAILURE:
+      return userProfile;
 
     default:
       return userProfile;

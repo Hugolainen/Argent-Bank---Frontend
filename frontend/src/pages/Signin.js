@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signinUser } from '../actions/auth';
+import { retrieveProfile } from '../actions/user';
 
 export class SigninPage extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ export class SigninPage extends Component {
           const savedUser = { email: this.state.email, password: this.state.password };
           localStorage.setItem('rememberedUser', JSON.stringify(savedUser));
         } else localStorage.removeItem('rememberedUser');
+        dispatch(retrieveProfile());
       })
       .catch(() => {
         this.setState({
@@ -75,7 +77,9 @@ export class SigninPage extends Component {
   }
 
   render() {
-    if (this.props.isLoggedIn) return <Redirect to="/profile" />;
+    if (this.props.isLoggedIn && this.props.userProfile) {
+      return <Redirect to="/profile" />;
+    }
     return (
       <main className="main bg-dark">
         <section className="sign-in-content">
@@ -112,10 +116,10 @@ export class SigninPage extends Component {
 
 function mapStateToProps(state) {
   const { isLoggedIn } = state.auth;
-  const { message } = state.message;
+  const userProfile = state.userProfile;
   return {
     isLoggedIn,
-    message,
+    userProfile,
   };
 }
 

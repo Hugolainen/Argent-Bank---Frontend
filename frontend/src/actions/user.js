@@ -1,4 +1,4 @@
-import { GET_PROFILE, UPDATE_PROFILE } from './types';
+import { GET_PROFILE, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE } from './types';
 
 import UserDataService from '../services/user.service';
 
@@ -7,7 +7,7 @@ export const retrieveProfile = () => async (dispatch) => {
     const res = await UserDataService.fetchProfile();
     dispatch({
       type: GET_PROFILE,
-      payload: res.data,
+      payload: res.body,
     });
   } catch (err) {
     console.log(err);
@@ -15,16 +15,21 @@ export const retrieveProfile = () => async (dispatch) => {
 };
 
 export const updateProfile = (firstName, lastName) => async (dispatch) => {
-  try {
-    const res = await UserDataService.updateProfile({ firstName: firstName, lastName: lastName });
+  return UserDataService.updateProfile({ firstName: firstName, lastName: lastName }).then(
+    (data) => {
+      dispatch({
+        type: UPDATE_PROFILE_SUCCESS,
+        payload: { userProfile: data },
+      });
 
-    dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data,
-    });
+      return Promise.resolve();
+    },
+    () => {
+      dispatch({
+        type: UPDATE_PROFILE_FAILURE,
+      });
 
-    return Promise.resolve(res.data);
-  } catch (err) {
-    return Promise.reject(err);
-  }
+      return Promise.reject();
+    },
+  );
 };

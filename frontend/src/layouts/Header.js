@@ -19,7 +19,6 @@ export class Header extends Component {
   render() {
     const loggedInUser = this.props.isLoggedIn;
     const userFirstName = this.props.firstName;
-    console.log(this.props);
 
     return (
       <nav className="main-nav">
@@ -54,7 +53,7 @@ export class Header extends Component {
 
 function mapStateToProps(state) {
   const { isLoggedIn } = state.auth;
-  const { firstName } = state.userProfile !== undefined ? state.userProfile.body : '';
+  const { firstName } = state.userProfile;
   return {
     isLoggedIn,
     firstName,

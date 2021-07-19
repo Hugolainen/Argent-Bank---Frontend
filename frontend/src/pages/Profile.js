@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Account from '../components/Account';
 
 import { connect } from 'react-redux';
-import { retrieveProfile, updateProfile } from '../actions/user';
+import { updateProfile } from '../actions/user';
 
 export class ProfilePage extends Component {
   constructor(props) {
@@ -42,13 +42,6 @@ export class ProfilePage extends Component {
     });
   }
 
-  async retrieveUserProfile() {
-    this.setState({
-      loading: true,
-    });
-    await this.props.retrieveProfile();
-  }
-
   handleProfileUpdate() {
     this.setState({
       loading: true,
@@ -71,17 +64,10 @@ export class ProfilePage extends Component {
       });
   }
 
-  async componentDidMount() {
-    await this.retrieveUserProfile();
-    console.log(this.props);
-    this.setState({
-      loading: false,
-      firstName: this.props.userProfile.firstName,
-      lastName: this.props.userProfile.lastName,
-    });
-  }
-
   render() {
+    const firstName = this.props.firstName;
+    const lastName = this.props.lastName;
+
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
     if (this.state.isLoading) return <div> Loading </div>;
     else
@@ -92,7 +78,7 @@ export class ProfilePage extends Component {
               <h1>
                 Welcome back
                 <br />
-                {this.state.firstName + ' ' + this.state.lastName + ' !'}
+                {firstName + ' ' + lastName + ' !'}
               </h1>
               <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
                 Edit Name
@@ -153,13 +139,13 @@ export class ProfilePage extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   const { isLoggedIn } = state.auth;
-  const userProfile = state.userProfile.body;
+  const { firstName, lastName } = state.userProfile;
   return {
     isLoggedIn,
-    userProfile,
+    firstName,
+    lastName,
   };
 }
 
-export default connect(mapStateToProps, { retrieveProfile })(ProfilePage);
+export default connect(mapStateToProps)(ProfilePage);

@@ -6,12 +6,12 @@ class AuthService {
       if (response.data.body.token) {
         localStorage.setItem('token', JSON.stringify(response.data.body.token));
       }
-      return response.data;
     });
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userProfile');
   }
 
   signup(data) {
