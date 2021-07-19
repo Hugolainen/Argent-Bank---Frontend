@@ -14,19 +14,17 @@ export class ProfilePage extends Component {
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
     this.state = {
       profileEdition: false,
-      firstName: '',
-      lastName: '',
       editorFirstName: '',
       editorLastName: '',
-      loading: false,
+      loading: true,
     };
   }
 
   toggleProfileEditor() {
     this.setState({
       profileEdition: !this.state.profileEdition,
-      editorFirstName: this.state.FirstName,
-      editorLastName: this.state.lastName,
+      editorFirstName: '',
+      editorLastName: '',
     });
   }
 
@@ -52,9 +50,10 @@ export class ProfilePage extends Component {
     dispatch(updateProfile(this.state.editorFirstName, this.state.editorLastName))
       .then(() => {
         this.setState({
-          loading: false,
           firstName: this.state.editorFirstName,
           lastName: this.state.editorLastName,
+          profileEdition: !this.state.profileEdition,
+          loading: false,
         });
       })
       .catch(() => {
@@ -64,10 +63,15 @@ export class ProfilePage extends Component {
       });
   }
 
-  render() {
-    const firstName = this.props.firstName;
-    const lastName = this.props.lastName;
+  componentDidMount() {
+    this.setState({
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
+      loading: false,
+    });
+  }
 
+  render() {
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
     if (this.state.isLoading) return <div> Loading </div>;
     else
@@ -78,7 +82,7 @@ export class ProfilePage extends Component {
               <h1>
                 Welcome back
                 <br />
-                {firstName + ' ' + lastName + ' !'}
+                {this.state.firstName + ' ' + this.state.lastName + ' !'}
               </h1>
               <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
                 Edit Name

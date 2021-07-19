@@ -77,7 +77,7 @@ export class SigninPage extends Component {
   }
 
   render() {
-    if (this.props.isLoggedIn && this.props.userProfile) {
+    if (this.props.isLoggedIn && this.props.userProfile.firstName) {
       return <Redirect to="/profile" />;
     }
     return (
