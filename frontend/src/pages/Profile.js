@@ -72,6 +72,23 @@ export class ProfilePage extends Component {
   }
 
   render() {
+    const mockAccounts = [
+      { title: 'Argent Bank Checking', transactionCounter: 8349, balance: 2082.79, balanceType: 'View transactions' },
+      { title: 'Argent Bank Savings', transactionCounter: 6712, balance: 10928.42, balanceType: 'View transactions' },
+      { title: 'Argent Bank Credit Card', transactionCounter: 8349, balance: 184.3, balanceType: 'Current Balance' },
+    ];
+
+    const accountList = mockAccounts.length
+      ? mockAccounts.map((account) => (
+          <Account
+            title={account.title}
+            transactionCounter={account.transactionCounter}
+            balance={account.balance}
+            balanceType={account.balanceType}
+          />
+        ))
+      : [];
+
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
     if (this.state.isLoading) return <div> Loading </div>;
     else
@@ -119,24 +136,7 @@ export class ProfilePage extends Component {
           )}
 
           <h2 className="sr-only">Accounts</h2>
-          <Account
-            title="Argent Bank Checking"
-            transactionCounter={8349}
-            balance={2082.79}
-            balanceType="View transactions"
-          />
-          <Account
-            title="Argent Bank Savings"
-            transactionCounter={6712}
-            balance={10928.42}
-            balanceType="View transactions"
-          />
-          <Account
-            title="Argent Bank Credit Card"
-            transactionCounter={8349}
-            balance={184.3}
-            balanceType="Current Balance"
-          />
+          {accountList}
         </main>
       );
   }
