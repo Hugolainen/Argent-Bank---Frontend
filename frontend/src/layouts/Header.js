@@ -10,23 +10,26 @@ export class Header extends Component {
   constructor(props) {
     super(props);
     this.handleSignout = this.handleSignout.bind(this);
+    this.state = {
+      loggedInUser: this.props.isLoggedIn,
+      userFirstName: this.props.firstName,
+    };
   }
 
   handleSignout() {
-    this.props.signoutUser();
+    const { dispatch } = this.props;
+    dispatch(signoutUser());
+    window.location.reload();
   }
 
   render() {
-    const loggedInUser = this.props.isLoggedIn;
-    const userFirstName = this.props.firstName;
-
     return (
       <nav className="main-nav">
         <Link className="main-nav-logo" to="/">
           <img className="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
-        {!loggedInUser && (
+        {!this.state.loggedInUser && (
           <div>
             <Link className="main-nav-item" to="/signin">
               <i className="fa fa-user-circle"></i>
@@ -34,11 +37,11 @@ export class Header extends Component {
             </Link>
           </div>
         )}
-        {loggedInUser && (
+        {this.state.loggedInUser && (
           <div>
             <Link className="main-nav-item" to="/profile">
               <i className="fa fa-user-circle"></i>
-              {userFirstName}
+              {this.state.userFirstName}
             </Link>
             <span className="main-nav-item" onClick={() => this.handleSignout()}>
               <i className="fa fa-sign-out"></i>
@@ -60,4 +63,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { signoutUser })(Header);
+export default connect(mapStateToProps)(Header);

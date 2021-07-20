@@ -55,7 +55,7 @@ export class SigninPage extends Component {
           const savedUser = { email: this.state.email, password: this.state.password };
           localStorage.setItem('rememberedUser', JSON.stringify(savedUser));
         } else localStorage.removeItem('rememberedUser');
-        dispatch(retrieveProfile());
+        dispatch(retrieveProfile()).then(window.location.reload());
       })
       .catch(() => {
         this.setState({

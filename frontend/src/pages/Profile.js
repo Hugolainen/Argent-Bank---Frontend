@@ -16,7 +16,8 @@ export class ProfilePage extends Component {
       profileEdition: false,
       editorFirstName: '',
       editorLastName: '',
-      loading: true,
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
     };
   }
 
@@ -41,33 +42,15 @@ export class ProfilePage extends Component {
   }
 
   handleProfileUpdate() {
-    this.setState({
-      loading: true,
-    });
-
     const { dispatch } = this.props;
+    const firstName = this.state.editorFirstName.length ? this.state.editorFirstName : this.state.firstName;
+    const lastName = this.state.editorLastName.length ? this.state.editorLastName : this.state.lastName;
 
-    dispatch(updateProfile(this.state.editorFirstName, this.state.editorLastName))
-      .then(() => {
-        this.setState({
-          firstName: this.state.editorFirstName,
-          lastName: this.state.editorLastName,
-          profileEdition: !this.state.profileEdition,
-          loading: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          loading: false,
-        });
+    dispatch(updateProfile(firstName, lastName)).then(() => {
+      this.setState({
+        profileEdition: !this.state.profileEdition,
       });
-  }
-
-  componentDidMount() {
-    this.setState({
-      firstName: this.props.firstName,
-      lastName: this.props.lastName,
-      loading: false,
+      window.location.reload();
     });
   }
 
@@ -81,6 +64,7 @@ export class ProfilePage extends Component {
     const accountList = mockAccounts.length
       ? mockAccounts.map((account) => (
           <Account
+            key={account.title}
             title={account.title}
             transactionCounter={account.transactionCounter}
             balance={account.balance}
@@ -90,55 +74,53 @@ export class ProfilePage extends Component {
       : [];
 
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
-    if (this.state.isLoading) return <div> Loading </div>;
-    else
-      return (
-        <main className="main bg-dark">
-          {!this.state.profileEdition ? (
-            <div className="header">
-              <h1>
-                Welcome back
-                <br />
-                {this.state.firstName + ' ' + this.state.lastName + ' !'}
-              </h1>
-              <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
-                Edit Name
-              </button>
-            </div>
-          ) : (
-            <div className="header">
-              <h1>Welcome back </h1>
-              <div className="profileEditor">
-                <div>
-                  <input
-                    placeholder={this.state.firstName}
-                    type="text"
-                    value={this.state.editorFirstName}
-                    onChange={this.onChangeFirstName}
-                  />
-                  <input
-                    placeholder={this.state.lastName}
-                    type="text"
-                    value={this.state.editorLastName}
-                    onChange={this.onChangeLastName}
-                  />
-                </div>
-                <div>
-                  <button className="edit-button" onClick={() => this.handleProfileUpdate()}>
-                    Save
-                  </button>
-                  <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
-                    Cancel
-                  </button>
-                </div>
+    return (
+      <main className="main bg-dark">
+        {!this.state.profileEdition ? (
+          <div className="header">
+            <h1>
+              Welcome back
+              <br />
+              {this.state.firstName + ' ' + this.state.lastName + ' !'}
+            </h1>
+            <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
+              Edit Name
+            </button>
+          </div>
+        ) : (
+          <div className="header">
+            <h1>Welcome back </h1>
+            <div className="profileEditor">
+              <div>
+                <input
+                  placeholder={this.state.firstName}
+                  type="text"
+                  value={this.state.editorFirstName}
+                  onChange={this.onChangeFirstName}
+                />
+                <input
+                  placeholder={this.state.lastName}
+                  type="text"
+                  value={this.state.editorLastName}
+                  onChange={this.onChangeLastName}
+                />
+              </div>
+              <div>
+                <button className="edit-button" onClick={() => this.handleProfileUpdate()}>
+                  Save
+                </button>
+                <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
+                  Cancel
+                </button>
               </div>
             </div>
-          )}
+          </div>
+        )}
 
-          <h2 className="sr-only">Accounts</h2>
-          {accountList}
-        </main>
-      );
+        <h2 className="sr-only">Accounts</h2>
+        {accountList}
+      </main>
+    );
   }
 }
 
