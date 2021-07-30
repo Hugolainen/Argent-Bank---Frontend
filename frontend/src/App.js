@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import './assets/style.css';
 
 import Header from './layouts/Header';
@@ -12,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="body">
+        <Body>
           <Header />
 
           <Switch>
@@ -28,10 +29,17 @@ class App extends Component {
           </Switch>
 
           <Footer />
-        </div>
+        </Body>
       </BrowserRouter>
     );
   }
 }
 
 export default App;
+
+const Body = styled.div`
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;

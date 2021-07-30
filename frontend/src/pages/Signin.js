@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { MainBgDark } from '../assets/style';
+
 import { signinUser } from '../actions/auth';
 import { retrieveProfile } from '../actions/user';
 
@@ -85,20 +88,20 @@ export class SigninPage extends Component {
       return <Redirect to="/profile" />;
     }
     return (
-      <main className="main bg-dark">
-        <section className="sign-in-content">
-          <i className="fa fa-user-circle sign-in-icon"></i>
+      <MainBgDark>
+        <SigninContent>
+          <SigninIcon className="fa fa-user-circle"></SigninIcon>
           <h1>Sign In</h1>
           <form onSubmit={this.handleSignin}>
-            <div className="input-wrapper">
+            <InputWrapper>
               <label htmlFor="email">Username</label>
               <input type="text" id="email" value={this.state.email} onChange={this.onChangeEmail} />
-            </div>
-            <div className="input-wrapper">
+            </InputWrapper>
+            <InputWrapper>
               <label htmlFor="password">Password</label>
               <input type="password" id="password" value={this.state.password} onChange={this.onChangePassword} />
-            </div>
-            <div className="input-remember">
+            </InputWrapper>
+            <ImputRemember>
               <input
                 type="checkbox"
                 id="rememberMe"
@@ -106,14 +109,12 @@ export class SigninPage extends Component {
                 onChange={this.onChangeRememberMe}
               />
               <label htmlFor="rememberMe">Remember me</label>
-            </div>
-            <button className="sign-in-button" type="submit">
-              Sign In
-            </button>
-            {this.state.showError && <span className="errorMessage"> Signin failed: verify email and password </span>}
+            </ImputRemember>
+            <SigninButton type="submit">Sign In</SigninButton>
+            {this.state.showError && <ErrorMessage> Signin failed: verify email and password </ErrorMessage>}
           </form>
-        </section>
-      </main>
+        </SigninContent>
+      </MainBgDark>
     );
   }
 }
@@ -128,3 +129,60 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(SigninPage);
+
+const SigninContent = styled.section`
+  box-sizing: border-box;
+  background-color: white;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 3rem;
+  padding: 2rem;
+`;
+
+const SigninIcon = styled.i`
+  font-size: 5rem;
+`;
+
+// Checkbox
+const ImputRemember = styled.div`
+  display: flex;
+
+  label {
+    margin-left: 0.25rem;
+  }
+`;
+
+// Signin button
+const SigninButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+`;
+
+// Input
+const InputWrapper = styled.label`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    padding: 5px;
+    font-size: 1.2rem;
+  }
+`;
+
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 12px;
+`;

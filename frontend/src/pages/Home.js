@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { SrOnlyH2 } from '../assets/style';
 
 import Banner from '../components/Banner';
 import FeatureCard from '../components/FeatureCard';
@@ -12,8 +14,8 @@ class HomePage extends Component {
     return (
       <main>
         <Banner />
-        <section className="features">
-          <h2 className="sr-only">Features</h2>
+        <Features>
+          <SrOnlyH2>Features</SrOnlyH2>
           <FeatureCard
             title="You are our #1 priority"
             text="Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in
@@ -33,9 +35,18 @@ class HomePage extends Component {
             image={iconSecurity}
             imageAlt="Security icon"
           />
-        </section>
+        </Features>
       </main>
     );
   }
 }
 export default HomePage;
+
+const Features = styled.section`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 920px) {
+    flex-direction: row;
+  }
+`;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 class Account extends Component {
   formatToCurrency = (amount) => {
@@ -14,16 +15,16 @@ class Account extends Component {
     const balanceType = this.props.balanceType;
 
     return (
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">{title + '(x' + transactionCounter + ')'}</h3>
-          <p className="account-amount">{formatedBalance}</p>
-          <p className="account-amount-description">{balanceType}</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+      <ScAccount>
+        <AccountContentWrapper>
+          <AccountTitle>{title + '(x' + transactionCounter + ')'}</AccountTitle>
+          <AccountAmmount>{formatedBalance}</AccountAmmount>
+          <AccountAmountDescription>{balanceType}</AccountAmountDescription>
+        </AccountContentWrapper>
+        <AccountContentWrapper cta={true}>
+          <TransactionButton>View transactions</TransactionButton>
+        </AccountContentWrapper>
+      </ScAccount>
     );
   }
 }
@@ -43,3 +44,64 @@ Account.defaultProps = {
 };
 
 export default Account;
+
+const ScAccount = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  @media (min-width: 720px) {
+    flex-direction: row;
+  }
+`;
+
+const AccountContentWrapper = styled.div`
+  width: 100%;
+  flex: 1;
+
+  @media (min-width: 720px) {
+    flex: ${(props) => props.cta && 0};
+  }
+`;
+
+const AccountTitle = styled.h3`
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: normal;
+`;
+
+const AccountAmmount = styled.p`
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+`;
+
+const AccountAmountDescription = styled.p`
+  margin: 0;
+`;
+
+const TransactionButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+
+  @media (min-width: 720px) {
+    width: 200px;
+  }
+`;

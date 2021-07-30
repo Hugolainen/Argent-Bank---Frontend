@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Account from '../components/Account';
-
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { MainBgDark, SrOnlyH2 } from '../assets/style';
+
+import Account from '../components/Account';
 import { updateProfile } from '../actions/user';
 
 export class ProfilePage extends Component {
@@ -82,9 +84,9 @@ export class ProfilePage extends Component {
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
     if (this.state.loading) return <div> Loading </div>;
     return (
-      <main className="main bg-dark">
+      <MainBgDark>
         {!this.state.profileEdition ? (
-          <div className="header">
+          <Header>
             <h1>
               Welcome back
               <br />
@@ -93,9 +95,9 @@ export class ProfilePage extends Component {
             <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
               Edit Name
             </button>
-          </div>
+          </Header>
         ) : (
-          <div className="header">
+          <Header>
             <h1>Welcome back </h1>
             <div className="profileEditor">
               <div>
@@ -121,12 +123,12 @@ export class ProfilePage extends Component {
                 </button>
               </div>
             </div>
-          </div>
+          </Header>
         )}
 
-        <h2 className="sr-only">Accounts</h2>
+        <SrOnlyH2>Accounts</SrOnlyH2>
         {accountList}
-      </main>
+      </MainBgDark>
     );
   }
 }
@@ -142,3 +144,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(ProfilePage);
+
+const Header = styled.div`
+  color: #fff;
+  margin-bottom: 2rem;
+`;

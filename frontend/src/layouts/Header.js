@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { SrOnlyH1 } from '../assets/style';
 
 import { connect } from 'react-redux';
 import { signoutUser } from '../actions/auth';
@@ -36,32 +38,32 @@ export class Header extends Component {
 
   render() {
     return (
-      <nav className="main-nav">
-        <Link className="main-nav-logo" to="/">
-          <img className="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
-          <h1 className="sr-only">Argent Bank</h1>
-        </Link>
+      <MainNav>
+        <MainNavLogo activeClassName="main-nav-isActive" to="/">
+          <MainNavLogoImage src={argentBankLogo} alt="Argent Bank Logo" />
+          <SrOnlyH1>Argent Bank</SrOnlyH1>
+        </MainNavLogo>
         {!this.state.loggedInUser && (
           <div>
-            <Link className="main-nav-item" to="/signin">
+            <MainNavItemLink activeClassName="main-nav-isActive" to="/signin">
               <i className="fa fa-user-circle"></i>
               Sign In
-            </Link>
+            </MainNavItemLink>
           </div>
         )}
         {this.state.loggedInUser && (
           <div>
-            <Link className="main-nav-item" to="/profile">
+            <MainNavItemLink activeClassName="main-nav-isActive" to="/profile">
               <i className="fa fa-user-circle"></i>
               {this.state.userFirstName}
-            </Link>
-            <span className="main-nav-item" onClick={() => this.handleSignout()}>
+            </MainNavItemLink>
+            <MainNavItem onClick={() => this.handleSignout()}>
               <i className="fa fa-sign-out"></i>
               Sign Out
-            </span>
+            </MainNavItem>
           </div>
         )}
-      </nav>
+      </MainNav>
     );
   }
 }
@@ -76,3 +78,50 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Header);
+
+const MainNav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  font-weight: bold;
+  color: #2c3e50;
+`;
+
+const MainNavLogo = styled(NavLink)`
+  display: flex;
+  align-items: center;
+`;
+
+const MainNavLogoImage = styled.img`
+  max-width: 100%;
+  width: 200px;
+`;
+
+const MainNavItem = styled.span`
+  text-decoration: none;
+  margin-right: 0.5rem;
+  cursor: pointer;
+
+  i {
+    margin-right: 0.2rem;
+  }
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
+
+const MainNavItemLink = styled(NavLink)`
+  text-decoration: none;
+  margin-right: 0.5rem;
+  cursor: pointer;
+
+  i {
+    margin-right: 0.2rem;
+  }
+
+  :hover {
+    text-decoration: underline;
+  }
+`;
