@@ -16,6 +16,7 @@ class UserDataService {
       if (response.data.body.firstName || response.data.body.lastName) {
         localStorage.setItem('userProfile', JSON.stringify(response.data.body));
       }
+      return response.data;
     });
   }
 }

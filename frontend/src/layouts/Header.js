@@ -16,10 +16,22 @@ export class Header extends Component {
     };
   }
 
+  componentDidUpdate() {
+    if (this.state.loggedInUser !== this.props.isLoggedIn) {
+      this.setState({
+        loggedInUser: this.props.isLoggedIn,
+      });
+    }
+    if (this.state.userFirstName !== this.props.firstName && this.props.isLoggedIn) {
+      this.setState({
+        userFirstName: this.props.firstName,
+      });
+    }
+  }
+
   handleSignout() {
     const { dispatch } = this.props;
     dispatch(signoutUser());
-    window.location.reload();
   }
 
   render() {

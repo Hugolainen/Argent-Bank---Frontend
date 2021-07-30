@@ -11,12 +11,12 @@ function userProfileReducer(userProfile = initialState, action) {
     case GET_PROFILE:
       return payload;
 
-    case UPDATE_PROFILE_SUCCESS:
+    case UPDATE_PROFILE_SUCCESS: {
       return {
         ...userProfile,
         ...payload,
       };
-
+    }
     case UPDATE_PROFILE_FAILURE:
       return userProfile;
 

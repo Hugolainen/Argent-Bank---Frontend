@@ -55,7 +55,11 @@ export class SigninPage extends Component {
           const savedUser = { email: this.state.email, password: this.state.password };
           localStorage.setItem('rememberedUser', JSON.stringify(savedUser));
         } else localStorage.removeItem('rememberedUser');
-        dispatch(retrieveProfile()).then(window.location.reload());
+        dispatch(retrieveProfile()).then(() => {
+          this.setState({
+            loading: false,
+          });
+        });
       })
       .catch(() => {
         this.setState({
@@ -77,7 +81,7 @@ export class SigninPage extends Component {
   }
 
   render() {
-    if (this.props.isLoggedIn && this.props.userProfile.firstName) {
+    if (this.props.isLoggedIn && this.props.userProfile.firstName && !this.state.loading) {
       return <Redirect to="/profile" />;
     }
     return (

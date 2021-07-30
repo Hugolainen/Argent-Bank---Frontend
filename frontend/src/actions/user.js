@@ -16,10 +16,10 @@ export const retrieveProfile = () => async (dispatch) => {
 
 export const updateProfile = (firstName, lastName) => async (dispatch) => {
   return UserDataService.updateProfile({ firstName: firstName, lastName: lastName }).then(
-    (data) => {
+    (res) => {
       dispatch({
         type: UPDATE_PROFILE_SUCCESS,
-        payload: { userProfile: data },
+        payload: res.body,
       });
 
       return Promise.resolve();

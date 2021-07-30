@@ -13,6 +13,7 @@ export class ProfilePage extends Component {
     this.onChangeLastName = this.onChangeLastName.bind(this);
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
     this.state = {
+      loading: false,
       profileEdition: false,
       editorFirstName: '',
       editorLastName: '',
@@ -42,15 +43,20 @@ export class ProfilePage extends Component {
   }
 
   handleProfileUpdate() {
+    this.setState({
+      loading: true,
+    });
     const { dispatch } = this.props;
     const firstName = this.state.editorFirstName.length ? this.state.editorFirstName : this.state.firstName;
     const lastName = this.state.editorLastName.length ? this.state.editorLastName : this.state.lastName;
 
     dispatch(updateProfile(firstName, lastName)).then(() => {
       this.setState({
-        profileEdition: !this.state.profileEdition,
+        profileEdition: false,
+        firstName: firstName,
+        lastName: lastName,
+        loading: false,
       });
-      window.location.reload();
     });
   }
 
@@ -74,6 +80,7 @@ export class ProfilePage extends Component {
       : [];
 
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
+    if (this.state.loading) return <div> Loading </div>;
     return (
       <main className="main bg-dark">
         {!this.state.profileEdition ? (
