@@ -32,3 +32,11 @@ export const MainBgDark = styled.main`
   flex: 1;
   background-color: #12002b;
 `;
+
+export const EditButton = styled.button`
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+`;

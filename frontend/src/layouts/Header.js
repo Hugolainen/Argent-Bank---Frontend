@@ -39,7 +39,7 @@ export class Header extends Component {
   render() {
     return (
       <MainNav>
-        <MainNavLogo activeClassName="main-nav-isActive" to="/">
+        <MainNavLogo to="/">
           <MainNavLogoImage src={argentBankLogo} alt="Argent Bank Logo" />
           <SrOnlyH1>Argent Bank</SrOnlyH1>
         </MainNavLogo>
@@ -96,6 +96,10 @@ const MainNavLogo = styled(NavLink)`
 const MainNavLogoImage = styled.img`
   max-width: 100%;
   width: 200px;
+
+  @media (max-width: 425px) {
+    width: 130px;
+  }
 `;
 
 const MainNavItem = styled.span`

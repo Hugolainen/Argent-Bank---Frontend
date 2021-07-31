@@ -5,60 +5,36 @@ import styled from 'styled-components';
 import { MainBgDark, SrOnlyH2 } from '../assets/style';
 
 import Account from '../components/Account';
-import { updateProfile } from '../actions/user';
+import ProfileHeader from '../components/ProfileHeader';
+import NameEditor from '../components/NameEditor';
 
 export class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.toggleProfileEditor = this.toggleProfileEditor.bind(this);
-    this.onChangeFirstName = this.onChangeFirstName.bind(this);
-    this.onChangeLastName = this.onChangeLastName.bind(this);
-    this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
     this.state = {
-      loading: false,
       profileEdition: false,
-      editorFirstName: '',
-      editorLastName: '',
       firstName: this.props.firstName,
       lastName: this.props.lastName,
     };
   }
 
+  componentDidUpdate() {
+    if (this.state.firstName !== this.props.firstName) {
+      this.setState({
+        firstName: this.props.firstName,
+      });
+    }
+    if (this.state.lastName !== this.props.lastName) {
+      this.setState({
+        lastName: this.props.lastName,
+      });
+    }
+  }
+
   toggleProfileEditor() {
     this.setState({
       profileEdition: !this.state.profileEdition,
-      editorFirstName: '',
-      editorLastName: '',
-    });
-  }
-
-  onChangeFirstName(e) {
-    this.setState({
-      editorFirstName: e.target.value,
-    });
-  }
-
-  onChangeLastName(e) {
-    this.setState({
-      editorLastName: e.target.value,
-    });
-  }
-
-  handleProfileUpdate() {
-    this.setState({
-      loading: true,
-    });
-    const { dispatch } = this.props;
-    const firstName = this.state.editorFirstName.length ? this.state.editorFirstName : this.state.firstName;
-    const lastName = this.state.editorLastName.length ? this.state.editorLastName : this.state.lastName;
-
-    dispatch(updateProfile(firstName, lastName)).then(() => {
-      this.setState({
-        profileEdition: false,
-        firstName: firstName,
-        lastName: lastName,
-        loading: false,
-      });
     });
   }
 
@@ -82,50 +58,22 @@ export class ProfilePage extends Component {
       : [];
 
     if (!this.props.isLoggedIn) return <Redirect to="/signin" />;
-    if (this.state.loading) return <div> Loading </div>;
     return (
       <MainBgDark>
-        {!this.state.profileEdition ? (
-          <Header>
-            <h1>
-              Welcome back
-              <br />
-              {this.state.firstName + ' ' + this.state.lastName + ' !'}
-            </h1>
-            <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
-              Edit Name
-            </button>
-          </Header>
-        ) : (
-          <Header>
-            <h1>Welcome back </h1>
-            <div className="profileEditor">
-              <div>
-                <input
-                  placeholder={this.state.firstName}
-                  type="text"
-                  value={this.state.editorFirstName}
-                  onChange={this.onChangeFirstName}
-                />
-                <input
-                  placeholder={this.state.lastName}
-                  type="text"
-                  value={this.state.editorLastName}
-                  onChange={this.onChangeLastName}
-                />
-              </div>
-              <div>
-                <button className="edit-button" onClick={() => this.handleProfileUpdate()}>
-                  Save
-                </button>
-                <button className="edit-button" onClick={() => this.toggleProfileEditor()}>
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </Header>
-        )}
-
+        <Header>
+          {!this.state.profileEdition ? (
+            <ProfileHeader
+              name={this.state.firstName + ' ' + this.state.lastName}
+              openNameEditor={() => this.toggleProfileEditor()}
+            />
+          ) : (
+            <NameEditor
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
+              closeNameEditor={() => this.toggleProfileEditor()}
+            />
+          )}
+        </Header>
         <SrOnlyH2>Accounts</SrOnlyH2>
         {accountList}
       </MainBgDark>

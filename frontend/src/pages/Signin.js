@@ -143,7 +143,6 @@ const SigninIcon = styled.i`
   font-size: 5rem;
 `;
 
-// Checkbox
 const ImputRemember = styled.div`
   display: flex;
 
@@ -152,7 +151,6 @@ const ImputRemember = styled.div`
   }
 `;
 
-// Signin button
 const SigninButton = styled.button`
   display: block;
   width: 100%;
@@ -165,7 +163,6 @@ const SigninButton = styled.button`
   color: #fff;
 `;
 
-// Input
 const InputWrapper = styled.label`
   display: flex;
   flex-direction: column;
